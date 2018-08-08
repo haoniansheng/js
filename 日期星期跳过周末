@@ -1,0 +1,96 @@
+
+function dateChange(flag) {
+    var week = ['日', '月', '火', '水', '木', '金', '土'];
+    var date = new Date();
+
+    if (date.getDay() == 0) {
+        date.setDate(date.getDate() - 2)
+    } else if (date.getDay() == 6) {
+        date.setDate(date.getDate() - 1)
+    }
+
+    $("#NASG04020 .date").html(date.format("yyyy/M/d") + "<br>(" + week[date.getDay()] + ")" + ' 先負');
+    $("#NASG04020 .content-side-header").html(date.format("M/d") + "<p>(" + week[date.getDay()] + ")</p>");
+
+    var i = 1
+    var j = 0;
+    while (i <= 4) {
+        var date2 = new Date();
+        date2.setDate(date2.getDate() - i - j)
+
+        if (date2.getDay() == 0) {
+            date2.setDate(date2.getDate() - 2)
+            j = 2
+
+        } else if (date.getDay() == 6) {
+            date2.setDate(date2.getDate() - 1)
+            j = 1
+        }
+
+        $('#NASG04020 .content-bottom-main>div:nth-child(' + (5 - i) + ') .content-bottom-top-title').html(date2.format("M/d") + "<span> (" + week[date2.getDay()] + ")</span>");
+        i++
+    }
+    // var DAY = '日曜日,月曜日,火曜日,水曜日,木曜日,金曜日,土曜日'.split(',');
+    // var time = new Date();
+    if (flag === 'next') {
+        date.setDate(date.getDate() + nowDate + 1);
+
+        if (date.getDay() == 6) {
+            date.setDate(date.getDate() + 2)
+            nowDate += 2
+        }
+
+        $("#NASG04020 .date").html(date.format("yyyy/M/d") + "<br>(" + week[date.getDay()] + ")" + ' 先負');
+        $("#NASG04020 .content-side-header").html(date.format("M/d") + "<p>(" + week[date.getDay()] + ")</p>");
+
+        var i = 1
+        var j = 0
+        while (i <= 4) {
+            var date3 = new Date();
+            date3.setDate(date3.getDate() + nowDate + 1 - i - j);
+
+            if (date3.getDay() == 0) {
+                date3.setDate(date3.getDate() - 2)
+                j = 2
+
+            } else if (date3.getDay() == 6) {
+                date3.setDate(date3.getDate() - 1)
+                j = 1
+            }
+
+            $('#NASG04020 .content-bottom-main>div:nth-child(' + (5 - i) + ') .content-bottom-top-title').html(date3.format("M/d") + "<span>(" + week[date3.getDay()] + ")</span>");
+            i++
+        }
+
+        nowDate++
+    } else if (flag === 'pre') {
+        date.setDate(date.getDate() + nowDate - 1);
+
+        if (date.getDay() == 0) {
+            date.setDate(date.getDate() - 2)
+            nowDate -= 2
+        }
+
+        $("#NASG04020 .date").html(date.format("yyyy/M/d") + "<br>(" + week[date.getDay()] + ")" + ' 先負');
+        $("#NASG04020 .content-side-header").html(date.format("M/d") + "<p>(" + week[date.getDay()] + ")</p>");
+        var i = 1
+        var j = 0
+
+        while (i <= 4) {
+            var date4 = new Date();
+            date4.setDate(date4.getDate() + nowDate - 1 - i - j);
+
+            if (date4.getDay() == 0) {
+                date4.setDate(date4.getDate() - 2)
+                j = 2
+
+            } else if (date4.getDay() == 6) {
+                date4.setDate(date4.getDate() - 1)
+                j = 1
+            }
+            $('#NASG04020 .content-bottom-main>div:nth-child(' + (5 - i) + ') .content-bottom-top-title').html(date4.format("M/d") + "<span>(" + week[date4.getDay()] + ")</span>");
+            i++
+        }
+        nowDate--
+    }
+}
